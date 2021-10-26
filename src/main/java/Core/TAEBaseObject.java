@@ -13,7 +13,7 @@ public class TAEBaseObject {
     public TAEBaseObject() {
     }
 
-    public Logger getLogger() {
+    public static Logger getLogger() {
         return LOGGER;
     }
 }

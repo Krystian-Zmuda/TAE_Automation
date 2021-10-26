@@ -12,36 +12,35 @@ import java.nio.file.Files;
 import java.util.Date;
 
 public class TestListener extends TAEBaseObject implements ITestListener {
-
     ITestContext iTestContext;
 
     @Override
-    public void onTestStart(ITestResult result) {
+    public void onTestStart(ITestResult iTestResult) {
 
     }
 
     @Override
-    public void onTestSuccess(ITestResult result) {
+    public void onTestSuccess(ITestResult iTestResult) {
 
     }
 
     @Override
     public void onTestFailure(ITestResult iTestResult) {
-            getLogger().error(String.format("Test '%s' failed", iTestResult.getName()));
+        getLogger().error(String.format("Test '%s' is failed", iTestResult.getName()));
         try {
             makeScreenshot(iTestResult.getName());
         } catch (Exception e) {
-            getLogger().error(String.format("Error occurs on saving screenshot: /n%s", e.getMessage()));
+            getLogger().error(String.format("Error happens on saving screenshot: \n%s", e.getMessage()));
         }
     }
 
     @Override
-    public void onTestSkipped(ITestResult result) {
+    public void onTestSkipped(ITestResult iTestResult) {
 
     }
 
     @Override
-    public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
+    public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
 
     }
 
@@ -51,14 +50,14 @@ public class TestListener extends TAEBaseObject implements ITestListener {
     }
 
     @Override
-    public void onFinish(ITestContext context) {
+    public void onFinish(ITestContext iTestContext) {
 
     }
 
     private void makeScreenshot(String testName) throws IOException {
         TAEDriver driver = (TAEDriver) iTestContext.getAttribute("driver");
-        File screenshot =((TakesScreenshot) driver.getDriver()).getScreenshotAs(OutputType.FILE);
-        File newFile = new File(System.getProperty("user.dir") + String.format("/target/test-output/screenshots/%s_%s.png", testName, new Date().getTime()));
+        File screenshot = ((TakesScreenshot) driver.getDriver()).getScreenshotAs(OutputType.FILE);
+        File newFile = new File(System.getProperty("user.dir") + String.format("/%s_%s.png", testName, new Date().getTime()));
         Files.copy(screenshot.toPath(), newFile.toPath());
     }
 }
